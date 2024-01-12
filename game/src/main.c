@@ -22,7 +22,7 @@ int main( void)
   initManager (agents, cnt, WD_ROWS, WD_COLS);
   
   InitWindow(SCRNW, SRCHT, "Agent Simulation");
-  SetTargetFPS(1);
+  SetTargetFPS(5);
   
   while (!WindowShouldClose())
   {

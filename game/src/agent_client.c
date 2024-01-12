@@ -2,7 +2,6 @@
 
 void agtClientUpdate (struct agent *agt) 
 {
-  assert (moveAgent(agt, N));
-  printf("movin up %d\n", agt->posY);
-  
+  moveAgent(agt, W);
+  // assert (moveAgent(agt, W));
 }

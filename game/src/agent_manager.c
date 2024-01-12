@@ -31,7 +31,6 @@ void initManager (struct agent *agents, size_t cnt, size_t wdR_, size_t wdC_)
 
   while (wdR_--)
   {
-    printf ("wdR = %d \n", wdR_);
     world[wdR_] = (enum entities *) calloc (sizeof(enum entities), wdC_);
     assert (world[wdR_]);
 
@@ -39,7 +38,6 @@ void initManager (struct agent *agents, size_t cnt, size_t wdR_, size_t wdC_)
 
   populateWorld (agents, cnt); 
 }
-
 
 /* 
  * Free World Resources
@@ -50,21 +48,18 @@ void destroyManager (void)
     free (world[row]);
 }
 
-
 struct list getSuroundingEnt(const struct agent agt);
-
-
 enum dir getDirectionFromAToB (const struct agent A, const struct agent B);
-  
 
 /* 
  * Check if the cordinate pair 'POSX' and 'POSY' are valid world position
  */
-bool validPos (int posX, int posY)
+bool validPos (int posX, int posY) 
 { 
-  return world[posY][posX] == NONE && inBnd(posX, wdC) && inBnd(posY, wdR);  
+  bool xB = inBnd(posX, wdC);
+  bool yB = inBnd(posY, wdR); 
+  return  xB && yB && (world[posY][posX] == NONE);
 }
-
 
 /* Agent Movement */
 bool moveAgent (struct agent *agt, enum dir d)
@@ -73,8 +68,7 @@ bool moveAgent (struct agent *agt, enum dir d)
  int dy = dirDelta[d][1];
  int newX = agt->posX + dx;
  int newY = agt->posY + dy;
- 
- assert (validPos (newX, newY));
+
  if (!validPos (newX, newY))
    return false;  
  
