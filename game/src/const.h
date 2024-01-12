@@ -1,13 +1,14 @@
-/* Agent Rendering Data */
-const int FACTOR = 25;
-const int WORLD_SIZE = 100;
-#define CENTER_X WORLD_SIZE / 2
-#define CENTER_Y WORLD_SIZE / 2
+// TODO Rename this header file 'config'
 
-/* Ralyib Windo Data */
-#define WINDOW_SZ WORLD_SIZE * FACTOR
-#define SCRNW WINDOW_SZ
-#define SRCHT WINDOW_SZ
-// #define CENTER_X SCRNW / 2
-// #define CENTER_Y SRCHT / 2
+/* Underlying World Data */
+const int WD_ROWS = 32;
+const int WD_COLS = 64;
+#define CENTER_X WD_COLS / 2
+#define CENTER_Y WD_ROWS / 2
+
+/* Ralyib Window Data */
+#define CELL_SIZE 16
+#define SCRNW WD_COLS * CELL_SIZE
+#define SRCHT WD_ROWS * CELL_SIZE
+
 

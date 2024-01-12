@@ -14,14 +14,12 @@ static void drawAgents(struct agent *agents, size_t cnt);
 static void drawGrid (void);
 static int randGet(int min, int max);
 
-  
 int main( void)
 {
   int cnt = 1;
   struct agent agents[cnt];
   initAgents(agents, cnt);
-  initManager (agents, cnt, WORLD_SIZE);
-  Camera camera = {0};
+  initManager (agents, cnt, WD_ROWS, WD_COLS);
   
   InitWindow(SCRNW, SRCHT, "Agent Simulation");
   SetTargetFPS(1);
@@ -92,8 +90,8 @@ static void drawAgents(struct agent *agents, size_t cnt)
   while (cnt--)
   {
     struct agent *agt = &agents[cnt];
-    int size = FACTOR; 
-    DrawRectangle(agt->posX * FACTOR, agt->posY * FACTOR, size, size, BLACK);
+    int size = CELL_SIZE; 
+    DrawRectangle(agt->posX * CELL_SIZE, agt->posY * CELL_SIZE, size, size, BLACK);
   }
 }
 
@@ -104,11 +102,11 @@ static void drawAgents(struct agent *agents, size_t cnt)
 static void drawGrid (void)
 {
 
-  for (int col = 0; col < WORLD_SIZE; col++)
+  for (int col = 0; col < WD_COLS; col++)
   {
-    for (int row = 0; row < WORLD_SIZE; row++)
+    for (int row = 0; row < WD_ROWS; row++)
     {
-     DrawRectangleLines (col * FACTOR, row * FACTOR, FACTOR, FACTOR, BLACK);
+     DrawRectangleLines (col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, BLACK);
     }
   }
 }

@@ -8,28 +8,33 @@
 #include <stddef.h>
 #include "agent_manager.h"
 
-static void populateWorld (struct agent *agents, size_t cnt);
-static bool inBnd (int pos);
+#define inBnd(pos, wdA) ((pos) >= 0 && (pos) < (wdA))
 
 int dirDelta[4][2] = {{0,-1}, {0,1}, {-1,0}, {1,0}};
-int worldSize;
+int wdR;
+int wdC;
 enum entities **world;
+
+static void populateWorld (struct agent *agents, size_t cnt);
 
 /*
  *  Initialize and create new world 
  */
-void initManager (struct agent *agents, size_t cnt, size_t wrld_sz)
+void initManager (struct agent *agents, size_t cnt, size_t wdR_, size_t wdC_)
 {
-  // Allocate and initialize 2d world array 
+  // Allocate and initialize 2d world array
   assert (agents);
-  worldSize = wrld_sz;
-  world = (enum entities **) calloc (sizeof(enum entities *), worldSize);
+  wdR = wdR_;
+  wdC = wdC_;
+  world = (enum entities **) calloc (sizeof(enum entities *), wdR);
   assert (world);
 
-  while (wrld_sz--)
+  while (wdR_--)
   {
-    world[wrld_sz] = (enum entities *) calloc (sizeof(enum entities), worldSize);
-    assert (world[wrld_sz]);
+    printf ("wdR = %d \n", wdR_);
+    world[wdR_] = (enum entities *) calloc (sizeof(enum entities), wdC_);
+    assert (world[wdR_]);
+
   }
 
   populateWorld (agents, cnt); 
@@ -41,7 +46,7 @@ void initManager (struct agent *agents, size_t cnt, size_t wrld_sz)
  */
 void destroyManager (void)
 {
-  for (int row = 0; row < worldSize; row++)
+  for (int row = 0; row < wdR; row++)
     free (world[row]);
 }
 
@@ -57,7 +62,7 @@ enum dir getDirectionFromAToB (const struct agent A, const struct agent B);
  */
 bool validPos (int posX, int posY)
 { 
-  return world[posY][posX] == NONE && inBnd(posX) && inBnd(posY);  
+  return world[posY][posX] == NONE && inBnd(posX, wdC) && inBnd(posY, wdR);  
 }
 
 
@@ -89,11 +94,3 @@ static void populateWorld(struct agent *agents, size_t cnt)
     world[posY][posX] = AGENT; 
   }
 }
-
-/*
- * Check If the axis point 'POS' is within world boundraries
-*/
-static bool inBnd (int pos)
-{
-  return pos >=0 && pos < worldSize;
-} 

@@ -9,7 +9,7 @@ enum dir {N, S, W, E};
 enum entities {NONE, FOOD, AGENT};
 
 /* Manager Life Cycle */
-void initManager (struct agent *, size_t, size_t);
+void initManager (struct agent *, size_t, size_t, size_t);
 void destroyManager (void); 
 
 /* Agent World Perception Information */
