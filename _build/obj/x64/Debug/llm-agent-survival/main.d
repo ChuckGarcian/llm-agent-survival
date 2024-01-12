@@ -60,7 +60,8 @@ obj/x64/Debug/llm-agent-survival/main.o: ../game/src/main.c \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
  ../raylib-master/src/raylib.h \
- /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h ../game/src/agent.h
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h ../game/src/agent.h \
+ ../game/src/const.h
 /usr/include/stdc-predef.h:
 /usr/include/stdio.h:
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
@@ -131,3 +132,4 @@ obj/x64/Debug/llm-agent-survival/main.o: ../game/src/main.c \
 ../raylib-master/src/raylib.h:
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h:
 ../game/src/agent.h:
+../game/src/const.h:

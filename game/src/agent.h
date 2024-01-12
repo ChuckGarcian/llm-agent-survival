@@ -6,8 +6,11 @@ struct agent
 
   int perceptual_radius;
   int action_radius;
-  void (*funcptr)(int);
+  void (*updateAgent)();
   /* C function pointers cheatsheet */
 };
+
+
+
 
 //evoid updateAgent (static agent);
