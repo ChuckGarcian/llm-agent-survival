@@ -109,9 +109,11 @@ endif
 GENERATED :=
 OBJECTS :=
 
+GENERATED += $(OBJDIR)/agent_client.o
 GENERATED += $(OBJDIR)/agent_manager.o
 GENERATED += $(OBJDIR)/list.o
 GENERATED += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/agent_client.o
 OBJECTS += $(OBJDIR)/agent_manager.o
 OBJECTS += $(OBJDIR)/list.o
 OBJECTS += $(OBJDIR)/main.o
@@ -178,6 +180,9 @@ endif
 # File Rules
 # #############################################
 
+$(OBJDIR)/agent_client.o: ../game/src/agent_client.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/agent_manager.o: ../game/src/agent_manager.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"

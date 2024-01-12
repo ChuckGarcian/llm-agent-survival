@@ -12,15 +12,17 @@ static void updateSystemState(struct agent *agents, size_t cnt);
 static void drawAgents(struct agent *agents, size_t cnt);
 static int randGet(int min, int max);
 
+extern void agtClientUpdate (struct agent *agt);
+  
 int main( void)
 {
-  int cnt = 5;
+  int cnt = 1;
   struct agent agents[cnt];
   initAgents(agents, cnt);
   initManager (agents, cnt, WINDOW_SZ);
 
   InitWindow(SCRNW, SRCHT, "Agent Simulation");
-  SetTargetFPS(60);
+  SetTargetFPS(1);
 
   while (!WindowShouldClose())
   {
@@ -56,6 +58,8 @@ static void initAgents (struct agent *agents, size_t cnt)
 
     agt->perceptual_radius = 2;
     agt->action_radius = 2;
+
+    agt->updateAgent = &agtClientUpdate;
   }
 }
 
