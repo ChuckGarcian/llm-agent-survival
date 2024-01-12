@@ -5,27 +5,48 @@
  */
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <assert.h>
+
 #include "agent.h"
 #include "agent_manager.h"
 #include "list.h"
 
 static void populateWorld (struct agent *agents, size_t cnt);
-static void validPos (struct agent agt);
+static bool validPos (int posX, int posY);
+static bool inBnd (int pos);
 
 /* 2d Matrix of sim world */
-enum entities *world;
+enum entities **world;
+int worldSize;
 
-/* Initialize and create new world */
+/*
+ *  Initialize and create new world 
+ */
 void initManager (struct agent *agents, size_t cnt, size_t wrld_sz)
 {
-  world = (enum entities *) calloc (size_of(enum entities), wrld_sz);
+  assert (agents);
+  worldSize = wrld_sz;
+  world = (enum entities **) calloc (sizeof(enum entities *), worldSize);
   assert (world);
+
+  while (wrld_sz--)
+  {
+    world[wrld_sz] = (enum entities *) calloc (sizeof(enum entities), worldSize);
+    assert (world[wrld_sz]);
+  }
+
+  populateWorld (agents, cnt); 
 }
 
-/* Frees World Resources*/
+
+/* 
+ * Free World Resources
+ */
 void destroyManager (void)
 {
-  free (world);
+  for (int row = 0; row < worldSize; row++)
+    free (world[row]);
 }
 
 
@@ -38,7 +59,34 @@ enum dir getDirectionFromAToB (const struct agent A, const struct agent B);
 /* Agent Movement */
 int move (struct agent * agt);
 
-static void populateWorld(agent *agents, size_t cnt)
-{
 
+static void populateWorld(struct agent *agents, size_t cnt)
+{
+  while (cnt--)
+  {
+    int posX = agents[cnt].posX;
+    int posY = agents[cnt].posY;
+    
+    assert (validPos(posX, posY));
+    
+    world[posY][posX] = AGENT;
+  }
+}
+
+
+/* 
+ * Check if the cordinate pair 'POSX' and 'POSY' are valid world position
+ */
+static bool validPos (int posX, int posY)
+{ 
+  return world[posY][posX] != NONE || !inBnd(posX) || !inBnd(posY);  
+}
+
+
+/*
+ * Check If the axis point 'POS' is within world boundraries
+*/
+static bool inBnd (int pos)
+{
+  return pos >=0 && pos < worldSize;
 }

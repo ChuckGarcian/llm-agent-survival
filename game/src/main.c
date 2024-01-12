@@ -5,18 +5,19 @@
 #include "raylib.h"
 #include "agent.h"
 #include "const.h"
+#include "agent_manager.h"
 
 static void initAgents(struct agent *agents, size_t cnt);
-static void updateSystemState(void);
+static void updateSystemState(struct agent *agents, size_t cnt);
 static void drawAgents(struct agent *agents, size_t cnt);
 static int randGet(int min, int max);
 
 int main( void)
 {
   int cnt = 5;
-
   struct agent agents[cnt];
   initAgents(agents, cnt);
+  initManager (agents, cnt, WINDOW_SZ);
 
   InitWindow(SCRNW, SRCHT, "Agent Simulation");
   SetTargetFPS(60);
@@ -24,7 +25,7 @@ int main( void)
   while (!WindowShouldClose())
   {
     // Update
-    updateSystemState();
+    updateSystemState(agents, cnt);
 
     // Draw
     BeginDrawing();
@@ -41,7 +42,7 @@ int main( void)
 /*
  * Populates emtpy array 'AGENTS' with randomly initilized agent objects 
  */    
-static void initAgents(struct agent *agents, size_t cnt)
+static void initAgents (struct agent *agents, size_t cnt)
 {
   while (cnt--)
   {
@@ -63,10 +64,16 @@ static int randGet(int min, int max)
   return (rand() % (abs(max - min) + 1) + min);
 }
 
-/* Update the state of the entire system by a timestep. 
+/* 
+ * Update the state of the entire system by a timestep
  */
-static void updateSystemState(void)
+static void updateSystemState(struct agent *agents, size_t cnt)
 {
+  while (cnt--)
+  {
+    struct agent agt = agents[cnt];
+    agt.updateAgent (&agt);
+  }
 }
 
 

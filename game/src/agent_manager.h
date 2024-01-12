@@ -1,5 +1,5 @@
 enum dir {N, S, W, E};
-enum entities {FOOD, AGENT};
+enum entities {FOOD, AGENT, NONE};
 
 /* Manager Life Cycle */
 void initManager (struct agent *, size_t, size_t);
