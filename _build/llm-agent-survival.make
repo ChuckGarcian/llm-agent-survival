@@ -109,18 +109,10 @@ endif
 GENERATED :=
 OBJECTS :=
 
-GENERATED += $(OBJDIR)/raylib_game.o
-GENERATED += $(OBJDIR)/screen_ending.o
-GENERATED += $(OBJDIR)/screen_gameplay.o
-GENERATED += $(OBJDIR)/screen_logo.o
-GENERATED += $(OBJDIR)/screen_options.o
-GENERATED += $(OBJDIR)/screen_title.o
-OBJECTS += $(OBJDIR)/raylib_game.o
-OBJECTS += $(OBJDIR)/screen_ending.o
-OBJECTS += $(OBJDIR)/screen_gameplay.o
-OBJECTS += $(OBJDIR)/screen_logo.o
-OBJECTS += $(OBJDIR)/screen_options.o
-OBJECTS += $(OBJDIR)/screen_title.o
+GENERATED += $(OBJDIR)/agent.o
+GENERATED += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/agent.o
+OBJECTS += $(OBJDIR)/main.o
 
 # Rules
 # #############################################
@@ -184,22 +176,10 @@ endif
 # File Rules
 # #############################################
 
-$(OBJDIR)/raylib_game.o: ../game/src/raylib_game.c
+$(OBJDIR)/agent.o: ../game/src/agent.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/screen_ending.o: ../game/src/screen_ending.c
-	@echo "$(notdir $<)"
-	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/screen_gameplay.o: ../game/src/screen_gameplay.c
-	@echo "$(notdir $<)"
-	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/screen_logo.o: ../game/src/screen_logo.c
-	@echo "$(notdir $<)"
-	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/screen_options.o: ../game/src/screen_options.c
-	@echo "$(notdir $<)"
-	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/screen_title.o: ../game/src/screen_title.c
+$(OBJDIR)/main.o: ../game/src/main.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

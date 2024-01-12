@@ -1,0 +1,3 @@
+./premake2 gmake2
+make
+./_bin/llm-agent-survival
