@@ -6,17 +6,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
-
-#include "agent.h"
 #include "agent_manager.h"
-#include "list.h"
 
 static void populateWorld (struct agent *agents, size_t cnt);
 static bool inBnd (int pos);
 
-/* 2d Matrix of sim world */
-enum entities **world;
+int dirDelta[4][2] = {{0,-1}, {0,1}, {-1,0}, {1,0}};
 int worldSize;
+enum entities **world;
 
 /*
  *  Initialize and create new world 
@@ -65,8 +62,21 @@ bool validPos (int posX, int posY)
 
 
 /* Agent Movement */
-int move (struct agent * agt);
-
+bool moveAgent (struct agent *agt, enum dir d)
+{
+ int dx = dirDelta[d][0];
+ int dy = dirDelta[d][1];
+ int newX = agt->posX + dx;
+ int newY = agt->posY + dy;
+ 
+ assert (validPos (newX, newY));
+ if (!validPos (newX, newY))
+   return false;  
+ 
+ agt->posX = newX;
+ agt->posY = newY;
+ return true;
+}
 
 static void populateWorld(struct agent *agents, size_t cnt)
 {
@@ -76,7 +86,7 @@ static void populateWorld(struct agent *agents, size_t cnt)
     int posX = agents[cnt].posX;
     int posY = agents[cnt].posY;
     assert (validPos(posX, posY));
-    world[posY][posX] = AGENT;
+    world[posY][posX] = AGENT; 
   }
 }
 

@@ -3,27 +3,29 @@
 #include <assert.h>
 #include <math.h>
 #include "raylib.h"
-#include "agent.h"
 #include "const.h"
 #include "agent_manager.h"
+
+extern void agtClientUpdate (struct agent *agt);
 
 static void initAgents(struct agent *agents, size_t cnt);
 static void updateSystemState(struct agent *agents, size_t cnt);
 static void drawAgents(struct agent *agents, size_t cnt);
+static void drawGrid (void);
 static int randGet(int min, int max);
 
-extern void agtClientUpdate (struct agent *agt);
   
 int main( void)
 {
   int cnt = 1;
   struct agent agents[cnt];
   initAgents(agents, cnt);
-  initManager (agents, cnt, WINDOW_SZ);
-
+  initManager (agents, cnt, WORLD_SIZE);
+  Camera camera = {0};
+  
   InitWindow(SCRNW, SRCHT, "Agent Simulation");
   SetTargetFPS(1);
-
+  
   while (!WindowShouldClose())
   {
     // Update
@@ -32,6 +34,7 @@ int main( void)
     // Draw
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    drawGrid ();
     drawAgents(agents, cnt);
     EndDrawing();
   }
@@ -75,8 +78,8 @@ static void updateSystemState(struct agent *agents, size_t cnt)
 {
   while (cnt--)
   {
-    struct agent agt = agents[cnt];
-    agt.updateAgent (&agt);
+    struct agent *agt = &agents[cnt];
+    agt->updateAgent (agt);
   }
 }
 
@@ -89,7 +92,23 @@ static void drawAgents(struct agent *agents, size_t cnt)
   while (cnt--)
   {
     struct agent *agt = &agents[cnt];
-    int size = WINDOW_SZ / FACTOR; 
-    DrawRectangle(agt->posX - size, agt->posY - size, size, size, BLACK);
+    int size = FACTOR; 
+    DrawRectangle(agt->posX * FACTOR, agt->posY * FACTOR, size, size, BLACK);
+  }
+}
+
+
+/*
+ * Draw A grid  
+*/
+static void drawGrid (void)
+{
+
+  for (int col = 0; col < WORLD_SIZE; col++)
+  {
+    for (int row = 0; row < WORLD_SIZE; row++)
+    {
+     DrawRectangleLines (col * FACTOR, row * FACTOR, FACTOR, FACTOR, BLACK);
+    }
   }
 }

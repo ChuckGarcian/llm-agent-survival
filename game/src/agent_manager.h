@@ -1,6 +1,10 @@
 #include <stdbool.h>
 #include <assert.h>
 
+#include "agent.h"
+#include "list.h"
+
+/* Enum Helpers */
 enum dir {N, S, W, E};
 enum entities {NONE, FOOD, AGENT};
 
@@ -14,7 +18,4 @@ enum dir getDirectionFromAToB (const struct agent, const struct agent);
 bool validPos (int posX, int posY);
 
 /* Agent Movement */
-int move (struct agent *);
-
-
-
+bool moveAgent (struct agent *, enum dir);

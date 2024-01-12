@@ -50,11 +50,12 @@ obj/x64/Debug/llm-agent-survival/agent_manager.o: \
  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h /usr/include/alloca.h \
- /usr/include/x86_64-linux-gnu/bits/stdlib-float.h ../game/src/agent.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
  ../game/src/agent_manager.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h /usr/include/assert.h \
- ../game/src/list.h /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h \
- /usr/include/stdint.h /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ ../game/src/agent.h ../game/src/list.h \
+ /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h
 /usr/include/stdc-predef.h:
 /usr/include/stdio.h:
@@ -112,10 +113,10 @@ obj/x64/Debug/llm-agent-survival/agent_manager.o: \
 /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 /usr/include/alloca.h:
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
-../game/src/agent.h:
 ../game/src/agent_manager.h:
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h:
 /usr/include/assert.h:
+../game/src/agent.h:
 ../game/src/list.h:
 /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h:
 /usr/include/stdint.h:
