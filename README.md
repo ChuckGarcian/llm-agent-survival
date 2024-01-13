@@ -1,4 +1,5 @@
 # Agent Framework
 
 ## TODO
- - [ ] Fix agent movement biases
+ - [ ] Move initAgents to agent_manager so the world 2d array and initAgents are
+       are integrated.
