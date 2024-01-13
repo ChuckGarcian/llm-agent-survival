@@ -1,5 +1,5 @@
 // TODO Rename this header file 'config'
-#include "raylib.h"
+
 
 /* Underlying World Data */
 #define WD_ROWS 200

@@ -1,5 +1,5 @@
-#include "util/random.h"
-#include "agent_manager.h"
+// #include "util/random.h"
+// #include "agent_manager.h"
 #include "stdio.h"
 
 void agtClientUpdate(struct agent *agent) 

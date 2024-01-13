@@ -21,6 +21,7 @@ bool am_validPos (int posX, int posY);
 bool moveAgent (struct agent *, enum dir);
 
 /* Mist */
+void printAgent(struct agent agt);
 static inline enum dir getRandomDirection(void) {return random_range (4);}
 static inline struct agent_base * getAgentFromElement(struct list_elem *e) 
   {return list_entry (e, struct agent_base, elem);}

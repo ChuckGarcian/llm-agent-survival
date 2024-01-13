@@ -135,6 +135,19 @@ bool moveAgent (struct agent *agt, enum dir d)
  return true;
 }
 
+void printAgent(struct agent agt) 
+{
+    printf("my_base.ID: %d\n", agt.my_base.ID);
+    printf("my_base.posX: %d\n", agt.my_base.posX);
+    printf("my_base.posY: %d\n", agt.my_base.posY);
+
+    printf("ID: %d\n", agt.my_base.ID);
+    printf("posX: %d\n", agt.my_base.posX);
+    printf("posY: %d\n", agt.my_base.posY);
+    printf("perceptual_radius: %d\n", agt.perceptual_radius);
+    printf("action_radius: %d\n", agt.action_radius);
+}
+
 static void populateWorld(struct agent *agents, size_t cnt)
 {
   while (cnt--)
