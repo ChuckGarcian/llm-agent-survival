@@ -16,7 +16,7 @@ static int randGet(int min, int max);
 
 int main( void)
 {
-  int cnt = 3;
+  int cnt = 2;
   assert (cnt < WD_COLS * WD_ROWS);
 
   struct agent agents[cnt];
@@ -24,7 +24,7 @@ int main( void)
   am_initManager (agents, cnt, WD_ROWS, WD_COLS);
   
   InitWindow(SCRNW, SRCHT, "Agent Simulation");
-  SetTargetFPS(3);
+  SetTargetFPS(1);
   
   while (!WindowShouldClose())
   {
@@ -51,11 +51,11 @@ static void initAgents (struct agent *agents, size_t cnt)
   while (cnt--)
   {
     struct agent *agt = &agents[cnt];  
-    agt->posX = randGet(0, WD_COLS);
-    agt->posY = randGet(0, WD_ROWS);
+    agt->my_base.posX = randGet(0, WD_COLS);
+    agt->my_base.posY = randGet(0, WD_ROWS);
+    agt->my_base.ID = cnt;
 
-
-    agt->perceptual_radius = 2;
+    agt->perceptual_radius = 3;
     agt->action_radius = 2;
     agt->updateAgent = &agtClientUpdate;
   }
@@ -87,7 +87,7 @@ static void drawAgents(struct agent *agents, size_t cnt)
   {
     struct agent *agt = &agents[cnt];
     int size = CELL_SIZE; 
-    DrawRectangle(agt->posX * CELL_SIZE, agt->posY * CELL_SIZE, size, size, BLACK);
+    DrawRectangle(agt->my_base.posX * CELL_SIZE, agt->my_base.posY * CELL_SIZE, size, size, BLACK);
   }
 }
 

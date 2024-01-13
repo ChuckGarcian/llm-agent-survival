@@ -16,12 +16,6 @@ struct agent_base
 struct agent
 {
   struct agent_base my_base;
-  
-  // TODO: REMOVE THIS
-  int ID;                /* Categorical ID - i.e NONE, FOOD, AGENT */
-  int posX;
-  int posY; 
-  
   int perceptual_radius;
   int action_radius;
   void (*updateAgent)(struct agent *);

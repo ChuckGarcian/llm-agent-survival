@@ -56,69 +56,49 @@ void am_getSuroundingEnt(const struct agent agt, struct list *res)
 {
   list_init (res);
   int rad = agt.perceptual_radius;
-  int strtX = agt.posX - rad;
-  int strtY = agt.posY - rad;
-  int endX = agt.posX + rad;
-  int endY = agt.posY + rad;
-  printf("agt.posX: %d, agt.posY: %d\n", agt.posX, agt.posY);
-  printf("rad: %d\n", rad);
-  printf("strtX: %d\n", strtX);
-  printf("strtY: %d\n", strtY);
-  printf("endX: %d\n", endX);
-  printf("endY: %d\n", endY);
+  int strtX = agt.my_base.posX - rad;
+  int strtY = agt.my_base.posY - rad;
+  int endX = agt.my_base.posX + rad;
+  int endY = agt.my_base.posY + rad;
+  
   for (int row = strtY; row <= endY; row++)
   {
     for (int col = strtX; col <= endX; col++)
     {
-      //printf("row: %d, col: %d\n", row, col);
-
       // Only valid cordinates
       if (!inBnd(col, wdC) || !inBnd(row, wdR) || world[row][col].ID == NONE) continue;
-      if (col == agt.posX && row == agt.posY) continue;
-      printf(" Added \n");
+      if (col == agt.my_base.posX && row == agt.my_base.posY) continue;
+      printf ("Add\n");   
       list_push_front (res, &world[row][col].elem);
     }
   }
-  printf ("Done In GetSurround \n \n");
 }
 
 // TODO: Rewrite better
 /*
  *  Return the cardinal direction to make agent A closer to B
  */
+/*
+ *  Return the cardinal direction to make agent A closer to B
+ */
 enum dir am_getDirectionFromAToB (const struct agent A, const struct agent_base B)
 {
-  int dx = abs(A.posX - B.posX);
-  int dy = abs(A.posY - B.posY);
-  printf("dx: %d, dy: %d\n", dx, dy);
-  printf("A.posX: %d, A.posY: %d\n", A.posX, A.posY);
-  printf("B.posX: %d, B.posY: %d\n", B.posX, B.posY);
-  if (dx == 0 && dy == 0) assert (0);
+    int x = A.my_base.posX - B.posX;
+    int y = A.my_base.posY - B.posY;
   
-  if (dx > dy)    
-    if (A.posX - B.posX < 0)
-      return E;
-      // East
-    else
-    {
-      return W;
-      // West
+    int dx = abs(x);
+    int dy = abs(y);
+  
+    if (dx == 0 && dy == 0) {
+        assert(0);  // The two agents are at the same position
     }
-  // Return the enum dir to make dx small
-  else
-   if (A.posY - B.posY < 0)
-   {
-     return S;
-     // South
-   }
-   else
-   {
-     return N;
-     // North
-   }
   
-  assert (0);
-   // Return the enum dir to make dy small
+    if (dx > dy) {
+        return (x < 0) ? E : W;  // East or West
+    } else {
+        return (y < 0) ? S : N;  // South or North
+    }
+    assert(0);
 }
 
 /* 
@@ -136,18 +116,18 @@ bool am_moveAgent (struct agent *agt, enum dir d)
 {
  int dx = dirDelta[d][0];
  int dy = dirDelta[d][1];
- int newX = agt->posX + dx;
- int newY = agt->posY + dy;
+ int newX = agt->my_base.posX + dx;
+ int newY = agt->my_base.posY + dy;
 
  if (!am_validPos (newX, newY))
    return false;  
    
- world[agt->posY][agt->posX].ID = NONE;
- world[newY][newX].ID = AGENT;
+ world[agt->my_base.posY][agt->my_base.posX].ID = NONE;
+ world[newY][newX].ID = agt->my_base.ID;
  world[newY][newX].posX = newX;
  world[newY][newX].posY = newY;
- agt->posX = newX;
- agt->posY = newY;
+ agt->my_base.posX = newX;
+ agt->my_base.posY = newY;
  
  return true;
 }
@@ -162,16 +142,16 @@ static void populateWorld(struct agent *agents, size_t cnt)
   while (cnt--)
   {
     struct agent *agt = &agents[cnt];
-    while (!am_validPos(agt->posX, agt->posY))
+    while (!am_validPos(agt->my_base.posX, agt->my_base.posY))
     {
-      agt->posX = randGet(0, wdC);
-      agt->posY = randGet(0, wdR);
+      agt->my_base.posX = randGet(0, wdC);
+      agt->my_base.posY = randGet(0, wdR);
     }
-    int posX = agents[cnt].posX;
-    int posY = agents[cnt].posY;
+    int posX = agents[cnt].my_base.posX;
+    int posY = agents[cnt].my_base.posY;
     
     assert (am_validPos(posX, posY));
-    world[posY][posX].ID = agt->ID;
+    world[posY][posX].ID = agt->my_base.ID;
     world[posY][posX].posX = posX;
     world[posY][posX].posY = posY;
   }
