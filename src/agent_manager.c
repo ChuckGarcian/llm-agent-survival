@@ -72,6 +72,9 @@ void getSurroundingAgents(const struct agent agt, struct list *res)
       list_push_front (res, &world[row][col].elem);
     }
   }
+  
+  // Shuffle list to prevent movement biasing
+  list_shuffle (res);
 }
 
 // TODO: Rewrite better

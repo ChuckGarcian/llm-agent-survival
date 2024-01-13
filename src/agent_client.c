@@ -28,9 +28,7 @@ void agtClientUpdate(struct agent *agent)
     moveAgent(agent, getRandomDirection());
   }
   else
-  {
-    list_shuffle (&surAgts);
-   
+  {   
     // While there are still entities in the surroundingEntities list
     while (!list_empty(&surAgts))
     {
