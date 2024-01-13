@@ -1,14 +1,15 @@
+/***
+ * At every time step each agent 
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
 
 #include "raylib.h"
-#include "const.h"
 #include "agent_manager.h"
 #include "util/random.h"
-
-extern void agtClientUpdate (struct agent *agt);
+#include "../examples/agent-priority-walk/congif.h"
 
 static void initAgents(struct agent *agents, size_t cnt);
 static void updateSystemState(struct agent *agents, size_t cnt);
@@ -53,9 +54,9 @@ static void initAgents (struct agent *agents, size_t cnt)
     struct agent *agt = &agents[cnt];  
     agt->my_base.posX = random_range (WD_COLS);
     agt->my_base.posY = random_range (WD_ROWS);
-    agt->my_base.ID = cnt;
+    agt->my_base.ID = cnt + 1;
 
-    agt->perceptual_radius = 3;
+    agt->perceptual_radius = 6;
     agt->action_radius = 2;
     agt->updateAgent = &agtClientUpdate;
   }

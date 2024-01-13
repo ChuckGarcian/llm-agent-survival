@@ -68,7 +68,6 @@ void getSurroundingAgents(const struct agent agt, struct list *res)
       // Only valid cordinates
       if (!inBnd(col, wdC) || !inBnd(row, wdR) || world[row][col].ID == NONE) continue;
       if (col == agt.my_base.posX && row == agt.my_base.posY) continue;
-      printf ("Add\n");   
       list_push_front (res, &world[row][col].elem);
     }
   }
@@ -135,7 +134,15 @@ bool moveAgent (struct agent *agt, enum dir d)
  return true;
 }
 
-void printAgent(struct agent agt) 
+void randMove(struct agent * agt)
+{
+  int desired_move = getRandomDirection();
+  int tries = 0;
+  while (!moveAgent(agt, desired_move) && tries++ < 5) 
+    desired_move = (desired_move + 1) % 4;
+}
+
+void printAgent(struct agent agt)
 {
     printf("my_base.ID: %d\n", agt.my_base.ID);
     printf("my_base.posX: %d\n", agt.my_base.posX);

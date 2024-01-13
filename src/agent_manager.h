@@ -19,6 +19,7 @@ bool am_validPos (int posX, int posY);
 
 /* Agent Movement */
 bool moveAgent (struct agent *, enum dir);
+void randMove (struct agent *);
 
 /* Mist */
 void printAgent(struct agent agt);
