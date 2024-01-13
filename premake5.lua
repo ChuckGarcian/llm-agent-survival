@@ -77,7 +77,7 @@ workspace (workspaceName)
 
     targetdir "_bin/%{cfg.buildcfg}/"
 
-    if(os.isdir("game")) then
+    if(os.isdir("src")) then
         startproject(workspaceName)
     end
 
@@ -86,10 +86,6 @@ workspace (workspaceName)
 check_raylib();
 
 include ("raylib_premake5.lua")
-
-if(os.isdir("game")) then
-    include ("game")
-end
 
 folders = os.matchdirs("*")
 for _, folderName in ipairs(folders) do
