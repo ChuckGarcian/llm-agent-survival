@@ -16,13 +16,13 @@ static int randGet(int min, int max);
 
 int main( void)
 {
-  int cnt = 1000;
+  int cnt = 3000;
   struct agent agents[cnt];
   initAgents(agents, cnt);
   initManager (agents, cnt, WD_ROWS, WD_COLS);
   
   InitWindow(SCRNW, SRCHT, "Agent Simulation");
-  SetTargetFPS(5);
+  SetTargetFPS(20);
   
   while (!WindowShouldClose())
   {
@@ -36,7 +36,7 @@ int main( void)
     drawAgents(agents, cnt);
     EndDrawing();
   }
-
+  destroyManager();
   CloseWindow();
   return 0;
 }

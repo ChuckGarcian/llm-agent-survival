@@ -1,11 +1,8 @@
 #include "agent_manager.h"
-
-static int randGet(int min, int max)
-{
-  return (rand() % (abs(max - min) + 1) + min);
-}
+#include "random.h"
+// extern int random_range (int n);
 
 void agtClientUpdate (struct agent *agt) 
 {
-  while (!moveAgent(agt, randGet(0,3)));
+  while (!moveAgent(agt, random_range (4)));
 }

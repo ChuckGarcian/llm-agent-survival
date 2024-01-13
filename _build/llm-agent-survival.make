@@ -113,10 +113,12 @@ GENERATED += $(OBJDIR)/agent_client.o
 GENERATED += $(OBJDIR)/agent_manager.o
 GENERATED += $(OBJDIR)/list.o
 GENERATED += $(OBJDIR)/main.o
+GENERATED += $(OBJDIR)/random.o
 OBJECTS += $(OBJDIR)/agent_client.o
 OBJECTS += $(OBJDIR)/agent_manager.o
 OBJECTS += $(OBJDIR)/list.o
 OBJECTS += $(OBJDIR)/main.o
+OBJECTS += $(OBJDIR)/random.o
 
 # Rules
 # #############################################
@@ -190,6 +192,9 @@ $(OBJDIR)/list.o: ../game/src/list.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: ../game/src/main.c
+	@echo "$(notdir $<)"
+	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/random.o: ../game/src/random.c
 	@echo "$(notdir $<)"
 	$(SILENT) $(CC) $(ALL_CFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
