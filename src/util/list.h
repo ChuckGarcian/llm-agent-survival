@@ -159,6 +159,7 @@ bool list_empty (struct list *);
 
 /* Miscellaneous. */
 void list_reverse (struct list *);
+void list_shuffle (struct list *);
 
 /* Compares the value of two list elements A and B, given
    auxiliary data AUX.  Returns true if A is less than B, or

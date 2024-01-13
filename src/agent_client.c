@@ -2,7 +2,6 @@
 #include "agent_manager.h"
 #include "stdio.h"
 
-// extern int random_range (int n);
 void printAgent(struct agent agt) {
     printf("my_base.ID: %d\n", agt.my_base.ID);
     printf("my_base.posX: %d\n", agt.my_base.posX);
@@ -30,6 +29,8 @@ void agtClientUpdate(struct agent *agent)
   }
   else
   {
+    list_shuffle (&surAgts);
+   
     // While there are still entities in the surroundingEntities list
     while (!list_empty(&surAgts))
     {
@@ -52,7 +53,6 @@ void agtClientUpdate(struct agent *agent)
       printf("Direction to entity: %d \n", directionToEntity); 
     }
   }
-
-  // Print a message indicating the end of the agent update
+  
   printf("End of agent client update. \n\n");
 }

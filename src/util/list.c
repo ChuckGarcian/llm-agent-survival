@@ -1,4 +1,5 @@
 #include "list.h"
+#include "random.h"
 #include <assert.h>
 
 /* Our doubly linked lists have two header elements: the "head"
@@ -309,6 +310,38 @@ void list_reverse (struct list *list)
       swap (&list->head.next, &list->tail.prev);
       swap (&list->head.next->prev, &list->tail.prev->next);
     }
+}
+
+/* Shuffles list 'LIST' */
+void list_shuffle(struct list *list)
+{
+  int size = list_size (list);
+  struct list_elem *old_list[size];
+  int i = 0;
+  
+  // Copy list elements into array 
+  while (!list_empty(list)) 
+  {
+    old_list[i] = list_pop_front (list);
+    i++;
+  }
+  
+  // Shuffle array in place 
+  for (i = 0; i < size; i++)
+  {
+    int new = random_range (size);
+    struct list_elem *c1 = old_list[i];
+    old_list[i] = old_list[new];
+    old_list[new] = c1;
+  }
+  
+  // Add them back to list
+  for (i = 0; i < size; i++)
+  {
+    list_push_back (list, old_list[i]);
+  }
+
+  assert (list_size(list) == size);
 }
 
 /* Returns true only if the list elements A through B (exclusive)
