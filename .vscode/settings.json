@@ -3,6 +3,8 @@
         "agent.h": "c",
         "random": "c",
         "limits": "c",
-        "agent_manager.h": "c"
+        "agent_manager.h": "c",
+        "list.h": "c",
+        "stdbool.h": "c"
     }
 }

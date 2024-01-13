@@ -1,21 +1,20 @@
 #include <stdbool.h>
 #include <assert.h>
 
-#include "agent.h"
 #include "list.h"
+#include "agent.h"
 
 /* Enum Helpers */
 enum dir {N, S, W, E};
-enum entities {NONE, FOOD, AGENT};
 
 /* Manager Life Cycle */
-void initManager (struct agent *, size_t, size_t, size_t);
-void destroyManager (void); 
+void am_initManager (struct agent *, size_t, size_t, size_t);
+void am_destroyManager (void); 
 
 /* Agent World Perception Information */
-struct list getSuroundingEnt(const struct agent);
-enum dir getDirectionFromAToB (const struct agent, const struct agent);
-bool validPos (int posX, int posY);
+void am_getSuroundingEnt(const struct agent, struct list *);
+enum dir am_getDirectionFromAToB (const struct agent, const struct agent_base);
+bool am_validPos (int posX, int posY);
 
 /* Agent Movement */
-bool moveAgent (struct agent *, enum dir);
+bool am_moveAgent (struct agent *, enum dir);
