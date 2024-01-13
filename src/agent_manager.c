@@ -52,7 +52,7 @@ void am_destroyManager (void)
  * Populate list 'RES' with the entities within the perceptual radius of agent
  * 'AGT'
  */
-void am_getSuroundingEnt(const struct agent agt, struct list *res)
+void getSurroundingAgents(const struct agent agt, struct list *res)
 {
   list_init (res);
   int rad = agt.perceptual_radius;
@@ -81,7 +81,7 @@ void am_getSuroundingEnt(const struct agent agt, struct list *res)
 /*
  *  Return the cardinal direction to make agent A closer to B
  */
-enum dir am_getDirectionFromAToB (const struct agent A, const struct agent_base B)
+enum dir getDirectionFromAgentToAgent (const struct agent A, const struct agent_base B)
 {
     int x = A.my_base.posX - B.posX;
     int y = A.my_base.posY - B.posY;
@@ -112,7 +112,7 @@ bool am_validPos (int posX, int posY)
 }
 
 /* Agent Movement */
-bool am_moveAgent (struct agent *agt, enum dir d)
+bool moveAgent (struct agent *agt, enum dir d)
 {
  int dx = dirDelta[d][0];
  int dy = dirDelta[d][1];
@@ -132,11 +132,6 @@ bool am_moveAgent (struct agent *agt, enum dir d)
  return true;
 }
 
-static int randGet(int min, int max)
-{
-  return (rand() % (abs(max - min) + 1) + min);
-}
-
 static void populateWorld(struct agent *agents, size_t cnt)
 {
   while (cnt--)
@@ -144,8 +139,8 @@ static void populateWorld(struct agent *agents, size_t cnt)
     struct agent *agt = &agents[cnt];
     while (!am_validPos(agt->my_base.posX, agt->my_base.posY))
     {
-      agt->my_base.posX = randGet(0, wdC);
-      agt->my_base.posY = randGet(0, wdR);
+      agt->my_base.posX = random_range(wdC);
+      agt->my_base.posY = random_range (wdR);
     }
     int posX = agents[cnt].my_base.posX;
     int posY = agents[cnt].my_base.posY;

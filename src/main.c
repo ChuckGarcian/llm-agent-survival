@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
+
 #include "raylib.h"
 #include "const.h"
 #include "agent_manager.h"
+#include "util/random.h"
 
 extern void agtClientUpdate (struct agent *agt);
 
@@ -12,30 +14,28 @@ static void initAgents(struct agent *agents, size_t cnt);
 static void updateSystemState(struct agent *agents, size_t cnt);
 static void drawAgents(struct agent *agents, size_t cnt);
 static void drawGrid (void);
-static int randGet(int min, int max);
 
 int main( void)
 {
-  int cnt = 2;
-  assert (cnt < WD_COLS * WD_ROWS);
+  assert (CNT < WD_COLS * WD_ROWS);
 
-  struct agent agents[cnt];
-  initAgents(agents, cnt);
-  am_initManager (agents, cnt, WD_ROWS, WD_COLS);
+  struct agent agents[CNT];
+  initAgents(agents, CNT);
+  am_initManager (agents, CNT, WD_ROWS, WD_COLS);
   
   InitWindow(SCRNW, SRCHT, "Agent Simulation");
-  SetTargetFPS(1);
+  SetTargetFPS(FPS);
   
   while (!WindowShouldClose())
   {
     // Update
-    updateSystemState(agents, cnt);
+    updateSystemState(agents, CNT);
 
     // Draw
     BeginDrawing();
     ClearBackground(RAYWHITE);
     drawGrid ();
-    drawAgents(agents, cnt);
+    drawAgents(agents, CNT);
     EndDrawing();
   }
   am_destroyManager();
@@ -51,19 +51,14 @@ static void initAgents (struct agent *agents, size_t cnt)
   while (cnt--)
   {
     struct agent *agt = &agents[cnt];  
-    agt->my_base.posX = randGet(0, WD_COLS);
-    agt->my_base.posY = randGet(0, WD_ROWS);
+    agt->my_base.posX = random_range (WD_COLS);
+    agt->my_base.posY = random_range (WD_ROWS);
     agt->my_base.ID = cnt;
 
     agt->perceptual_radius = 3;
     agt->action_radius = 2;
     agt->updateAgent = &agtClientUpdate;
   }
-}
-
-static int randGet(int min, int max)
-{
-  return (rand() % (abs(max - min) + 1) + min);
 }
 
 /* 

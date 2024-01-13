@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdint.h>
+#include <time.h>
 #include <assert.h>
 #include "random.h"
 
@@ -81,7 +82,13 @@ unsigned long random_ulong (void)
   return ul;
 }
 
+/*
+ * Obtain a random number in the range 0...n (exclusive). 
+ * Note: The random generator is seeded with current system time, on every call
+ * to this function
+ */
 int random_range (int n)
 {
+  random_init (time(NULL));
   return random_ulong () % n;
 }

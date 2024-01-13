@@ -1,7 +1,7 @@
 enum entities {NONE, FOOD, AGENT,};
 
 /* TODO: This should be moved to agent_manager.h, as it pertains to general
-   Agent data rathre then client agent data */
+   Agent data rather then client agent data */
 
 /* Base agent data used in agent manager */
 struct agent_base 

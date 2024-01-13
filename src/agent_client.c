@@ -1,5 +1,5 @@
-#include "agent_manager.h"
 #include "util/random.h"
+#include "agent_manager.h"
 #include "stdio.h"
 
 // extern int random_range (int n);
@@ -15,24 +15,44 @@ void printAgent(struct agent agt) {
     printf("action_radius: %d\n", agt.action_radius);
 }
 
-void agtClientUpdate (struct agent *agt) 
+void agtClientUpdate(struct agent *agent) 
 {  
-  // printAgent (*agt);
-  while (!am_moveAgent(agt, random_range (4)));
+  // Create a list to hold the entities surrounding the agent
+  struct list surAgts;
 
-  struct list sur; // List of enitites surrounding me
-  am_getSuroundingEnt(*agt, &sur);
+  // Populate the list with the entities surrounding the agent
+  getSurroundingAgents(*agent, &surAgts);
 
-  while (!list_empty (&sur))
-   {
-     struct list_elem *e = list_pop_front (&sur);
-     struct agent_base *f = list_entry (e, struct agent_base, elem);
-     enum dir d = am_getDirectionFromAToB (*agt, *f);
-     bool suc = am_moveAgent (agt, d);
-     if (!suc) am_moveAgent(agt, random_range (4));
-     printf ("agent_suc  %d \n", suc);
-     printf ("direction=%d \n", d); 
-   }
-  printf ("agent_client \n\n");
-  
+  // If there are no entities surrounding the agent, move the agent in a random direction
+  if (list_empty(&surAgts)) 
+  {
+    moveAgent(agent, getRandomDirection());
+  }
+  else
+  {
+    // While there are still entities in the surroundingEntities list
+    while (!list_empty(&surAgts))
+    {
+      
+      struct list_elem *entityElement = list_pop_front (&surAgts);
+      struct agent_base *entity = getAgentFromElement(entityElement);
+
+      // Get the direction from the agent to the entity
+      //  And try to move the agent in the direction of the entity
+      enum dir directionToEntity = getDirectionFromAgentToAgent(*agent, *entity);
+      bool wasMoveSuccessful = moveAgent(agent, directionToEntity);
+
+      // If the move was not successful, move the agent in a random direction
+      if (!wasMoveSuccessful) 
+      {
+        moveAgent(agent, getRandomDirection());
+      }
+      
+      printf("Move was successful: %d \n", wasMoveSuccessful);
+      printf("Direction to entity: %d \n", directionToEntity); 
+    }
+  }
+
+  // Print a message indicating the end of the agent update
+  printf("End of agent client update. \n\n");
 }

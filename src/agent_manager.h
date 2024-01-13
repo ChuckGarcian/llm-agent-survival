@@ -2,6 +2,7 @@
 #include <assert.h>
 
 #include "util/list.h"
+#include "util/random.h"
 #include "agent.h"
 
 /* Enum Helpers */
@@ -12,9 +13,14 @@ void am_initManager (struct agent *, size_t, size_t, size_t);
 void am_destroyManager (void); 
 
 /* Agent World Perception Information */
-void am_getSuroundingEnt(const struct agent, struct list *);
-enum dir am_getDirectionFromAToB (const struct agent, const struct agent_base);
+void getSurroundingAgents(const struct agent, struct list *);
+enum dir getDirectionFromAgentToAgent (const struct agent, const struct agent_base);
 bool am_validPos (int posX, int posY);
 
 /* Agent Movement */
-bool am_moveAgent (struct agent *, enum dir);
+bool moveAgent (struct agent *, enum dir);
+
+/* Mist */
+static inline enum dir getRandomDirection(void) {return random_range (4);}
+static inline struct agent_base * getAgentFromElement(struct list_elem *e) 
+  {return list_entry (e, struct agent_base, elem);}
