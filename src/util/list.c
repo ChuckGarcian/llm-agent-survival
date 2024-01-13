@@ -315,9 +315,12 @@ void list_reverse (struct list *list)
 /* Shuffles list 'LIST' */
 void list_shuffle(struct list *list)
 {
+  
   int size = list_size (list);
   struct list_elem *old_list[size];
   int i = 0;
+
+  if (size == 0) return;
   
   // Copy list elements into array 
   while (!list_empty(list)) 
