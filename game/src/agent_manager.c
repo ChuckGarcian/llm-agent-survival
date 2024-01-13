@@ -77,13 +77,24 @@ bool moveAgent (struct agent *agt, enum dir d)
  return true;
 }
 
+static int randGet(int min, int max)
+{
+  return (rand() % (abs(max - min) + 1) + min);
+}
+
 static void populateWorld(struct agent *agents, size_t cnt)
 {
-
   while (cnt--)
   {
+    struct agent *agt = &agents[cnt];
+    while (!validPos(agt->posX, agt->posY))
+    {
+      agt->posX = randGet(0, wdC);
+      agt->posY = randGet(0, wdR);
+    }
     int posX = agents[cnt].posX;
     int posY = agents[cnt].posY;
+    
     assert (validPos(posX, posY));
     world[posY][posX] = AGENT; 
   }

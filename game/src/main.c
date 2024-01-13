@@ -16,7 +16,7 @@ static int randGet(int min, int max);
 
 int main( void)
 {
-  int cnt = 1;
+  int cnt = 1000;
   struct agent agents[cnt];
   initAgents(agents, cnt);
   initManager (agents, cnt, WD_ROWS, WD_COLS);
@@ -41,7 +41,6 @@ int main( void)
   return 0;
 }
 
-
 /*
  * Populates emtpy array 'AGENTS' with randomly initilized agent objects 
  */    
@@ -49,17 +48,13 @@ static void initAgents (struct agent *agents, size_t cnt)
 {
   while (cnt--)
   {
-    struct agent *agt = &agents[cnt];
-    agt->posX = CENTER_X;
-    agt->posY = CENTER_Y;
-    // agt->posX = randGet(0, SCRNW);
-    // agt->posY = randGet(0, SRCHT);
-    assert(agt->posX < SCRNW);
-    assert(agt->posY < SRCHT);
+    struct agent *agt = &agents[cnt];  
+    agt->posX = randGet(0, WD_COLS);
+    agt->posY = randGet(0, WD_ROWS);
+
 
     agt->perceptual_radius = 2;
     agt->action_radius = 2;
-
     agt->updateAgent = &agtClientUpdate;
   }
 }
@@ -81,7 +76,6 @@ static void updateSystemState(struct agent *agents, size_t cnt)
   }
 }
 
-
 /*
  * Draw agents array 'AGENTS' of count 'CNT' to winow
  */
@@ -94,7 +88,6 @@ static void drawAgents(struct agent *agents, size_t cnt)
     DrawRectangle(agt->posX * CELL_SIZE, agt->posY * CELL_SIZE, size, size, BLACK);
   }
 }
-
 
 /*
  * Draw A grid  
