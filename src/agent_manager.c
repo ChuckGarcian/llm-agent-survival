@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <string.h>
 #include "agent_manager.h"
 
 #define inBnd(pos, wdA) ((pos) >= 0 && (pos) < (wdA))
@@ -24,15 +25,18 @@ static void populateWorld (struct agent *agents, size_t cnt);
 void am_initManager (struct agent *agents, size_t cnt, size_t wdR_, size_t wdC_)
 {
   // Allocate and initialize 2d world array
-  assert (agents);
   wdR = wdR_;
   wdC = wdC_;
-  world = (struct agent_base **) calloc (sizeof(struct agent_base *), wdR);
+  assert (agents);
+
+  world = (struct agent_base **) malloc (sizeof(struct agent_base *) * wdR);
+  memset (world, NONE, sizeof(struct agent_base *) * wdR);
   assert (world);
 
   while (wdR_--)
   {
-    world[wdR_] = (struct agent_base *) calloc (sizeof(struct agent_base), wdC_);
+    world[wdR_] = (struct agent_base *) malloc (sizeof(struct agent_base) * wdC_);
+    memset (world[wdR_], NONE, sizeof(struct agent_base) * wdC_);
     assert (world[wdR_]);
   }
 
@@ -110,6 +114,7 @@ bool am_validPos (int posX, int posY)
 { 
   bool xB = inBnd(posX, wdC);
   bool yB = inBnd(posY, wdR); 
+  
   return  xB && yB && (world[posY][posX].ID == NONE);
 }
 
@@ -134,7 +139,21 @@ bool moveAgent (struct agent *agt, enum dir d)
  return true;
 }
 
-void randMove(struct agent * agt)
+/*
+* Moves agent 'AGT' in the direction 'D', by 'PACES' number of times.
+* Returns the number of sucessfull paces.
+*/
+int moveMany(struct agent *agt, enum dir d, int paces)
+{
+  while (moveAgent(agt, d) && --paces > 0)
+  return paces;
+}
+
+
+/*
+* Gaurenteed to move agent 'AGT' in a random direction, unless otherwise locked
+*/
+void randMove(struct agent *agt)
 {
   int desired_move = getRandomDirection();
   int tries = 0;

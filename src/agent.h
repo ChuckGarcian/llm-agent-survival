@@ -1,4 +1,4 @@
-enum entities {NONE, FOOD, AGENT,};
+enum entities {NONE = -1, FOOD = 1, AGENT = 2};
 
 /* TODO: This should be moved to agent_manager.h, as it pertains to general
    Agent data rather then client agent data */
