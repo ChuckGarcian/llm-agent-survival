@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <string.h>
 #include "agent_manager.h"
+#include <math.h>
 
 #define inBnd(pos, wdA) ((pos) >= 0 && (pos) < (wdA))
 
@@ -77,13 +78,10 @@ void getSurroundingAgents(const struct agent agt, struct list *res)
   }
   
   // Shuffle list to prevent movement biasing
-  list_shuffle (res);
+  // list_shuffle (res);
 }
 
 // TODO: Rewrite better
-/*
- *  Return the cardinal direction to make agent A closer to B
- */
 /*
  *  Return the cardinal direction to make agent A closer to B
  */
@@ -118,6 +116,32 @@ bool am_validPos (int posX, int posY)
   return  xB && yB && (world[posY][posX].ID == NONE);
 }
 
+bool agent_list_less(const struct list_elem *a, const struct list_elem *b, void *aux)
+{
+  struct agent_base *parent = getAgentFromElement ((struct list_elem *) aux);
+  struct agent_base *A = getAgentFromElement (a);
+  struct agent_base *B = getAgentFromElement (b);
+  
+  // Calculate the distance between parent and A
+  int dxA = parent->posX - A->posX;
+  int dyA = parent->posY - A->posY;
+  double distA = sqrt(dxA * dxA + dyA * dyA);
+
+  // Calculate the distance between parent and B
+  int dxB = parent->posX - B->posX;
+  int dyB = parent->posY - B->posY;
+  double distB = sqrt(dxB * dxB + dyB * dyB);
+
+  // Compare the distances
+  return distA < distB;
+}
+
+struct agent_base *getClosestAgent(struct agent *parent, struct list *agtList)
+{ 
+  list_sort (agtList, agent_list_less, &parent->my_base);
+  return getAgentFromElement (list_front (agtList));
+}
+
 /* Agent Movement */
 bool moveAgent (struct agent *agt, enum dir d)
 {
@@ -145,6 +169,7 @@ bool moveAgent (struct agent *agt, enum dir d)
 */
 int moveMany(struct agent *agt, enum dir d, int paces)
 {
+  if (paces == 0) return 0;
   while (moveAgent(agt, d) && --paces > 0)
   return paces;
 }

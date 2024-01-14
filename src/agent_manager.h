@@ -16,6 +16,7 @@ void am_destroyManager (void);
 void getSurroundingAgents(const struct agent, struct list *);
 enum dir getDirectionFromAgentToAgent (const struct agent, const struct agent_base);
 bool am_validPos (int posX, int posY);
+struct agent_base *getClosestAgent (struct agent *, struct list *);
 
 /* Agent Movement */
 bool moveAgent (struct agent *, enum dir);
