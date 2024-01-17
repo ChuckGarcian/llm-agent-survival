@@ -28,6 +28,10 @@ void start_sim (void)
   InitWindow(SCRNW, SRCHT, "Agent Simulation");
   SetTargetFPS(FPS);
   
+  // char *c = NULL;
+  // int size;
+  // getline (&c, &size, stdin);
+  
   while (!WindowShouldClose())
   {
     // Update

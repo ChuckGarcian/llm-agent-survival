@@ -6,9 +6,7 @@
 
 void agtClientUpdate(struct agent *agent) 
 {  
- 
-  if(!moveAgent (agent, S)) moveAgent (agent, N);
- 
+  moveAgent (agent, S);
 }
 
 int main (int)
