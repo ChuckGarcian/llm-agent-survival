@@ -139,7 +139,7 @@ bool agent_list_less(const struct list_elem *a, const struct list_elem *b, void 
 struct agent_base *getClosestAgent(struct agent *parent, struct list *agtList)
 { 
   list_sort (agtList, agent_list_less, &parent->my_base);
-  return getAgentFromElement (list_front (agtList));
+  return getAgentFromElement (list_pop_back (agtList));
 }
 
 /* Get the distance from agent A to agent B */
