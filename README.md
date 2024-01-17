@@ -1,6 +1,6 @@
 # Agent Framework
 Simple framework easily defining multi-agent systems in C. 
-## Example 1 - Sand
+## Example - Naive Drone Clusters 
 ```
 void agtClientUpdate(struct agent *agent) 
 {
