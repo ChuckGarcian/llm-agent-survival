@@ -6,17 +6,18 @@
 #include <assert.h>
 #include <math.h>
 
+#include "config.h"
 #include "raylib.h"
 #include "agent_manager.h"
 #include "util/random.h"
-#include "../examples/agent-priority-walk/congif.h"
+#include "graphics.h"
 
 static void initAgents(struct agent *agents, size_t cnt);
 static void updateSystemState(struct agent *agents, size_t cnt);
 static void drawAgents(struct agent *agents, size_t cnt);
 static void drawGrid (void);
 
-int main( void)
+void start_sim (void)
 {
   assert (CNT < WD_COLS * WD_ROWS);
 
@@ -55,8 +56,9 @@ static void initAgents (struct agent *agents, size_t cnt)
     agt->my_base.posX = random_range (WD_COLS);
     agt->my_base.posY = random_range (WD_ROWS);
     agt->my_base.ID = cnt + 1;
+    agt->my_base.heading = getRandomDirection ();
 
-    agt->perceptual_radius = 6;
+    agt->perceptual_radius = 20;
     agt->action_radius = 2;
     agt->updateAgent = &agtClientUpdate;
   }

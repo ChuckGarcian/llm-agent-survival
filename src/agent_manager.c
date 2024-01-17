@@ -12,6 +12,7 @@
 
 #define inBnd(pos, wdA) ((pos) >= 0 && (pos) < (wdA))
 
+
 int dirDelta[4][2] = {{0,-1}, {0,1}, {-1,0}, {1,0}};
 int wdR;
 int wdC;
@@ -78,7 +79,7 @@ void getSurroundingAgents(const struct agent agt, struct list *res)
   }
   
   // Shuffle list to prevent movement biasing
-  // list_shuffle (res);
+  list_shuffle (res);
 }
 
 // TODO: Rewrite better
@@ -87,22 +88,21 @@ void getSurroundingAgents(const struct agent agt, struct list *res)
  */
 enum dir getDirectionFromAgentToAgent (const struct agent A, const struct agent_base B)
 {
-    int x = A.my_base.posX - B.posX;
-    int y = A.my_base.posY - B.posY;
+  int x = A.my_base.posX - B.posX;
+  int y = A.my_base.posY - B.posY;
   
-    int dx = abs(x);
-    int dy = abs(y);
+  int dx = abs(x);
+  int dy = abs(y);
   
-    if (dx == 0 && dy == 0) {
-        assert(0);  // The two agents are at the same position
-    }
+  if (dx == 0 && dy == 0) // The two agents are at the same position
+    assert(0);  
   
-    if (dx > dy) {
-        return (x < 0) ? E : W;  // East or West
-    } else {
-        return (y < 0) ? S : N;  // South or North
-    }
-    assert(0);
+  if (dx > dy) 
+    return (x < 0) ? E : W;  // East or West
+  else
+    return (y < 0) ? S : N;  // South or North
+
+  assert(0);
 }
 
 /* 
@@ -140,6 +140,14 @@ struct agent_base *getClosestAgent(struct agent *parent, struct list *agtList)
 { 
   list_sort (agtList, agent_list_less, &parent->my_base);
   return getAgentFromElement (list_front (agtList));
+}
+
+/* Get the distance from agent A to agent B */
+int getDistanceFromAgentToAgent(const struct agent A, const struct agent_base B)
+{
+  int dxA = A.my_base.posX - B.posX;
+  int dyA = A.my_base.posY - B.posY;
+  return sqrt(dxA * dxA + dyA * dyA); 
 }
 
 /* Agent Movement */
@@ -197,6 +205,23 @@ void printAgent(struct agent agt)
     printf("posY: %d\n", agt.my_base.posY);
     printf("perceptual_radius: %d\n", agt.perceptual_radius);
     printf("action_radius: %d\n", agt.action_radius);
+}
+
+int getOpposite (enum dir d)
+{
+  switch (d)
+  {
+  case N:
+    return S;
+  case S:
+    return N;
+  case E:
+    return W;
+  case W:
+    return E;
+  default:
+    assert(0);
+  }
 }
 
 static void populateWorld(struct agent *agents, size_t cnt)

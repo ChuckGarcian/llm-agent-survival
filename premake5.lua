@@ -86,13 +86,16 @@ workspace (workspaceName)
 check_raylib();
 
 include ("raylib_premake5.lua")
+include ("src/premake5.lua")
+include ("examples/premake5.lua")
 
-folders = os.matchdirs("*")
-for _, folderName in ipairs(folders) do
-    if (string.starts(folderName, "raylib") == false and string.starts(folderName, "_") == false and string.starts(folderName, ".") == false) then
-        if (os.isfile(folderName .. "/premake5.lua")) then
-            print(folderName)
-            include (folderName)
-        end
-    end
-end
+-- folders = os.matchdirs("*")
+
+-- for _, folderName in ipairs(folders) do
+-- if (string.starts(folderName, "raylib") == false and string.starts(folderName, "_") == false and string.starts(folderName, ".") == false) then
+--     if (os.isfile(folderName .. "/premake5.lua")) then
+--         print(folderName)
+--         include (folderName)
+--     end
+-- end
+-- end

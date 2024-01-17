@@ -10,6 +10,7 @@ struct agent_base
   int ID;                /* Categorical ID - i.e NONE, FOOD, AGENT */
   int posX;
   int posY; 
+  int heading;
 };
 
 /* Agent data used in the agent client */
@@ -17,6 +18,7 @@ struct agent
 {
   struct agent_base my_base;
   int perceptual_radius;
+  
   int action_radius;
   void (*updateAgent)(struct agent *);
   /* C function pointers cheatsheet */
