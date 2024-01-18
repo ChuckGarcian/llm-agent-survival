@@ -56,7 +56,7 @@ void am_destroyManager (void)
 
 /*
  * Populate list 'RES' with the entities within the perceptual radius of agent
- * 'AGT'
+ * 'AGT'.
  */
 void getSurroundingAgents(const struct agent agt, struct list *res)
 {
@@ -79,7 +79,7 @@ void getSurroundingAgents(const struct agent agt, struct list *res)
   }
   
   // Shuffle list to prevent movement biasing
-  list_shuffle (res);
+  // list_shuffle (res);
 }
 
 // TODO: Rewrite better

@@ -1,7 +1,10 @@
 /*
-  In this example, I tried to 
-  agents with lower id have greater priority to move autonomously, were as lesser
-  priority agents are forced to move towards higher priority agents.
+  In this example agent selects a direction to move once - There are two different
+  ways an agent will move:
+    1. An agent will selects closest high priority agent to itself and move 
+    in that direction.
+    2. If there are no high priority agents in it's vicinity, it will move in
+    a random direction.
 */
 
 #include "../src/util/random.h"
@@ -15,20 +18,17 @@ int num_paces = 10;
 void agtClientUpdate (struct agent *agent)
 {
   struct list surAgts;
-  bool succ = false;
   getSurroundingAgents(*agent, &surAgts);
   list_shuffle (&surAgts);
-  
+
   // Try to move in the direction of closest agent
   while (!list_empty(&surAgts))
   {
     struct agent_base *tgt = getClosestAgent (agent, &surAgts);
     enum dir vector = getDirectionFromAgentToAgent(*agent, *tgt);
-    
-    if (getDistanceFromAgentToAgent(*agent, *tgt) < 6)
-      moveAgent(agent, getOpposite(vector));
 
-    if (tgt->ID < agent->my_base.ID && !succ)
+
+    if (tgt->ID < agent->my_base.ID)
     {
       int num_moves = num_paces;
       int old_moves = 0;
@@ -37,11 +37,7 @@ void agtClientUpdate (struct agent *agent)
       do {
        
         num_moves = moveMany (agent, vector, num_moves);     
-        if (old_moves == num_moves) 
-        {
-          succ = true;
-          break;
-        }
+        if (old_moves == num_moves) return;
         old_moves = num_moves;
       } while (num_moves > 0);
     }

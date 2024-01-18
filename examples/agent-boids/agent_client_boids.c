@@ -22,7 +22,7 @@ void agtClientUpdate(struct agent *agent)
   // printAgent(*agent);
 
   // Populate the list with the entities surrounding the agent
-  getSurroundingAgents(*agent, &surAgts);
+  getSurroundingAgents(*agent, &surAgts, false);
 
   // If there are no entities surrounding the agent, move the agent in a random direction
   int numAgents = 0;
