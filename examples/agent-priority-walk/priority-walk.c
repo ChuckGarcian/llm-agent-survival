@@ -1,6 +1,7 @@
 /*
-  Gives priority to agents closests to this agent, when selecting
-  a direction to move in.
+  In this example, I tried to 
+  agents with lower id have greater priority to move autonomously, were as lesser
+  priority agents are forced to move towards higher priority agents.
 */
 
 #include "../src/util/random.h"
@@ -9,44 +10,37 @@
 #include "stdio.h"
 #include "config.h"
 
-int numberPaces = 10;
+int num_paces = 10;
 
 void agtClientUpdate (struct agent *agent)
 {
-  // Create a list to hold the entities surrounding the agent
   struct list surAgts;
-
-  // Populate the list with the entities surrounding the agent
   getSurroundingAgents(*agent, &surAgts);
 
-  // If there are no entities surrounding the agent, move the agent in a random direction
-
-  // While there are still entities in the surroundingEntities list
+  // Try to move in the direction of closest agent
   while (!list_empty(&surAgts))
   {
-    struct agent_base *entity = getClosestAgent (agent, &surAgts);
-    
-    //  getAgentFromElement(entityElement);
-
-    //  Get the direction from the agent to the entity
-    //  And try to move the agent in the direction of the entity
-    if (entity->ID < agent->my_base.ID)
+    struct agent_base *tgt = getClosestAgent (agent, &surAgts);
+  
+    if (tgt->ID < agent->my_base.ID)
     {
-      // Try to move towards the agent numberPaces times
-      int numberMoves = numberPaces;
-      int oldMvs = 0;
-      do
+      int num_moves = num_paces;
+      int old_moves = 0;
+      
+      // Continue moving the agent toward target agent, as long as there are moves left
       {
-        enum dir directionToEntity = getDirectionFromAgentToAgent(*agent, *entity);
-        numberMoves = moveMany (agent, directionToEntity, numberMoves);     
-        if (oldMvs == numberMoves) return;
-        oldMvs = numberMoves;
-      } while (numberMoves > 0);
+        enum dir vector = getDirectionFromAgentToAgent(*agent, *tgt);
+        num_moves = moveMany (agent, vector, num_moves);     
+        if (old_moves == num_moves) return;
+        old_moves = num_moves;
+      } while (num_moves > 0);
     }
     
   }
 
-  int numberMoves = numberPaces;
+  // There are no lesser priority agents in the immediate vicinity,
+  // so move in a random direction
+  int numberMoves = num_paces;
   int oldMvs = 0;
   do
   {

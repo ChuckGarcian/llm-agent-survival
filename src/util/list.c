@@ -407,6 +407,7 @@ static void inplace_merge (struct list_elem *a0, struct list_elem *a1b0,
       }
 }
 
+/* CG: Sorts from in to inreasing order*/
 /* Sorts LIST according to LESS given auxiliary data AUX, using a
    natural iterative merge sort that runs in O(n lg n) time and
    O(1) space in the number of elements in LIST. */
