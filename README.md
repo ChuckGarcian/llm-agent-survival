@@ -35,6 +35,5 @@ void agtClientUpdate(struct agent *agent)
 ## TODO
  - [ ] Move initAgents to agent_manager so the world 2d array and initAgents are
        are integrated.
- - [ ] Cache all possible directions possible with respect to the matrix generated
-       from radius. Cache prior to main sim execution.
+ - [ ] Cache all possible directions possible with respect to the matrix generated from radius. Cache prior to main sim execution.
  - [ ] Support raylib shaders for to increase performance.       
