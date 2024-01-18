@@ -26,7 +26,9 @@ bool moveAgent (struct agent *, enum dir);
 int moveMany (struct agent *, enum dir, int);
 void randMove (struct agent *);
 
-/* Mistc*/
+/* Agent creation and destruction */
+
+/* Mistc*/ 
 void printAgent(struct agent agt);
 int getOpposite (enum dir);
 static inline enum dir getRandomDirection(void) {return random_range (4);}

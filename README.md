@@ -37,3 +37,4 @@ void agtClientUpdate(struct agent *agent)
        are integrated.
  - [ ] Cache all possible directions possible with respect to the matrix generated
        from radius. Cache prior to main sim execution.
+ - [ ] Support raylib shaders for to increase performance.       
