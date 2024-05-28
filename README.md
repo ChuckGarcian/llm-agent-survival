@@ -1,7 +1,7 @@
-v# Agent Framework
+# Agent Framework
 Simple framework easily defining multi-agent systems in C. 
 
-## Runing an example
+## Running an example
 To execute an example, you need to set the 'EXAMPLE' symbol in the makefile to the name of the example you wish to run. 
 
 For instance, if you want to run `boids.c` located in the examples directory, you would use the following command:
