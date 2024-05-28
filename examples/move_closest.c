@@ -11,7 +11,6 @@
 #include "agent_manager.h"
 #include "graphics.h"
 #include "stdio.h"
-#include "config.h"
 
 int num_paces = 10;
 
@@ -59,5 +58,9 @@ void agtClientUpdate (struct agent *agent)
 
 int main (int)
 {
+  struct masf_options opts;
+  opts = agent_init (0);
+  opts.fps = 10;
+  agent_setattr (opts);
   start_sim();
 }

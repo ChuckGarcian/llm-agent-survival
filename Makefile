@@ -3,7 +3,7 @@ BIN := bin
 CC := gcc
 LINKER := $(CC)
 TARGET := app.x
-EXAMPLE ?= simple_1
+EXAMPLE ?= boids
 
 # Path Symbols
 EXAMPLES_DIR := examples

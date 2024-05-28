@@ -2,7 +2,6 @@
 #include "agent_manager.h"
 #include "graphics.h"
 #include "stdio.h"
-#include "config.h"
 
 // bool bufferedMove (struct agent , enum dir d)
 // {
@@ -59,11 +58,11 @@ void agtClientUpdate(struct agent *agent)
     //  Get the direction from the agent to the entity
   //  And try to move the agent in the direction of the entity
   
-  
 }
 
-int main (int)
+int main (void)
 {
-  start_sim();
+  struct masf_options opts;
+  agent_init (0);
+  start_sim ();
 }
-  

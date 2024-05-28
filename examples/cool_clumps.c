@@ -2,7 +2,6 @@
 #include "agent_manager.h"
 #include "graphics.h"
 #include "stdio.h"
-#include "config.h"
 
 void agtClientUpdate(struct agent *agent)
 {
@@ -37,5 +36,7 @@ void agtClientUpdate(struct agent *agent)
 
 int main (int)
 {
+  struct masf_options opts;
+  opts = agent_init (0);
   start_sim();
 }

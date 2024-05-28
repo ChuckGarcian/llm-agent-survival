@@ -46,5 +46,7 @@ void agtClientUpdate(struct agent *agent)
 
 int main (int)
 {
-  start_sim ();
+  struct masf_options opts;
+  opts = agent_init (0);
+  start_sim();
 }

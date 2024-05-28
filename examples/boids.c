@@ -1,19 +1,7 @@
 #include "random.h"
 #include "agent_manager.h"
 #include "stdio.h"
-#include "config.h"
 #include "graphics.h"
-
-// bool bufferedMove (struct agent , enum dir d)
-// {
-//   bool wasMoveSuccessful;
-
-//   if (getDistanceFromAgentToAgent (*agent, *entity) < 10)
-//     wasMoveSuccessful = moveAgent(agent, getOpposite (directionToEntity));
-//   else
-//     wasMoveSuccessful = moveAgent (agent, directionToEntity);
-//   return wasMoveSuccessful;
-// }
 
 void agtClientUpdate(struct agent *agent)
 {
@@ -33,7 +21,7 @@ void agtClientUpdate(struct agent *agent)
   {
     struct list_elem *entityElement = list_pop_front(&surAgts);
     struct agent_base *entity = getAgentFromElement(entityElement);
-    /////
+
     bool wasMoveSuccessful;
     enum dir directionToEntity = getDirectionFromAgentToAgent(*agent, *entity);
     if (getDistanceFromAgentToAgent(*agent, *entity) < 6)
@@ -59,7 +47,6 @@ void agtClientUpdate(struct agent *agent)
       }
     }
 
-    printf("avgDir=%d\n", j);
     agent->my_base.heading = j;
   }
   else
@@ -77,5 +64,7 @@ void agtClientUpdate(struct agent *agent)
 
 int main (void)
 {
+  struct masf_options opts;
+  agent_init (0);
   start_sim ();
 }
