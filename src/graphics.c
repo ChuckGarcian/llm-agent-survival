@@ -6,7 +6,6 @@
 #include <assert.h>
 #include <math.h>
 
-#include "config.h"
 #include "raylib.h"
 #include "agent_manager.h"
 #include "random.h"
@@ -15,6 +14,7 @@
 #define ASSERTF_DEF_ONCE
 #include "assertf.h"
 
+extern void agtClientUpdate(struct agent *agent);
 struct masf_options options; 
 
 static void initAgents(struct agent *agents, size_t cnt);
@@ -66,8 +66,8 @@ void start_sim (void)
   initAgents(agents, options.cnt);
   am_initManager (agents, options.cnt, options.wd_rows, options.wd_cols);
   
-  InitWindow(SCRNW, SRCHT, "Agent Simulation");
-  SetTargetFPS(FPS);
+  InitWindow(options.screen_width, options.screen_height, "Agent Simulation");
+  SetTargetFPS(options.fps);
   
   // char *c = NULL;
   // int size;
@@ -129,8 +129,8 @@ static void drawAgents(struct agent *agents, size_t cnt)
   while (cnt--)
   {
     struct agent *agt = &agents[cnt];
-    int size = CELL_SIZE; 
-    DrawRectangle(agt->my_base.posX * CELL_SIZE, agt->my_base.posY * CELL_SIZE, size, size, BLACK);
+    int size = options.cell_size; 
+    DrawRectangle(agt->my_base.posX * options.cell_size, agt->my_base.posY * options.cell_size, size, size, BLACK);
   }
 }
 
@@ -144,7 +144,7 @@ static void drawGrid (void)
   {
     for (int row = 0; row < options.wd_rows; row++)
     {
-     DrawRectangleLines (col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, BLACK);
+     DrawRectangleLines (col * options.cell_size, row * options.cell_size, options.cell_size, options.cell_size, BLACK);
     }
   }
 }
