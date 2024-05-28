@@ -9,7 +9,7 @@
 #include "config.h"
 #include "raylib.h"
 #include "agent_manager.h"
-#include "util/random.h"
+#include "random.h"
 #include "graphics.h"
 
 static void initAgents(struct agent *agents, size_t cnt);

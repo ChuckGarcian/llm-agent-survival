@@ -1,6 +1,16 @@
-# Agent Framework
+v# Agent Framework
 Simple framework easily defining multi-agent systems in C. 
-## Example - Naive Drone Clusters 
+
+## Runing an example
+To execute an example, you need to set the 'EXAMPLE' symbol in the makefile to the name of the example you wish to run. 
+
+For instance, if you want to run `boids.c` located in the examples directory, you would use the following command:
+
+```bash
+make EXAMPLE=boids run
+
+```
+## Code Example - Naive Drone Clusters 
 ```
 void agtClientUpdate(struct agent *agent) 
 {
